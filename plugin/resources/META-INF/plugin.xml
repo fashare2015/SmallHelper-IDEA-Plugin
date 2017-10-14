@@ -1,0 +1,41 @@
+<idea-plugin>
+  <id>com.your.company.unique.plugin.id</id>
+  <name>Plugin display name here</name>
+  <version>1.0</version>
+  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+
+  <description><![CDATA[
+      Enter short description for your plugin here.<br>
+      <em>most HTML tags may be used</em>
+    ]]></description>
+
+  <change-notes><![CDATA[
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="141.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+    <codeInsight.lineMarkerProvider language="JSON" implementationClass="com.fashare.plugin.TestLineMarkerProvider"/>
+    <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.fashare.plugin.InvokeLineMarkerProvider"/>
+    <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.fashare.plugin.DeclareLineMarkerProvider"/>
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+    <action id="MVPGenerator.GeneratorAction" class="com.fashare.plugin.GeneratorAction"
+            text="Generator" description="generate mvp ">
+      <keyboard-shortcut keymap="$default" first-keystroke="ctrl G"/>
+    </action>
+  </actions>
+</idea-plugin>
