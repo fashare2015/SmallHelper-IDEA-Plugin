@@ -22,14 +22,22 @@ object NavTable{
 
     data class Row(var invokePsiSet: MutableSet<PsiElement> = mutableSetOf(),
                    var bridgePsi: JsonProperty? = null,
-                   var declarePsi: PsiElement? = null) {
+                   var declarePsi: PsiElement? = null,
+                   var pkgName: String?) {
 
         fun fill(other: Row) {
             invokePsiSet.addAll(other.invokePsiSet.filter {
                 !MyPsiUtil.contains(invokePsiSet, it)
             })
-            bridgePsi = other.bridgePsi
-            declarePsi = other.declarePsi
+            other.bridgePsi?.apply {
+                bridgePsi = this
+            }
+            other.declarePsi?.apply {
+                declarePsi = this
+            }
+            other.pkgName?.apply {
+                pkgName = this
+            }
         }
     }
 

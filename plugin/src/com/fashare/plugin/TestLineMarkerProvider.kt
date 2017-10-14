@@ -26,40 +26,68 @@ class TestLineMarkerProvider : RelatedItemLineMarkerProvider() {
         return null
     }
 
+    /**
+     *  {
+            "uri": "detail",
+            "pkg": "net.wequick.example.small.app.detail",
+            "rules": {
+                "sub": "Sub",
+                "sub/aa": "Sub2"
+            }
+        }
+     */
     override fun collectNavigationMarkers(element: PsiElement, result: MutableCollection<in RelatedItemLineMarkerInfo<*>>?) {
-        // 匹配 "detail" 以及 "detail?from=app.home"
+        // uri: 匹配 "detail" 以及 "detail?from=app.home"
         (element as? JsonProperty)
                 ?.takeIf { it.name == "uri" && it.value is JsonStringLiteral }
                 ?.let {
-                    val value = (it.value as? JsonStringLiteral)?.value
+                    val bundlePsi = it.parent as? JsonObject
+
+                    val pkgPsi = bundlePsi?.children?.find {
+                        val child = it as? JsonProperty
+                        child?.name == "pkg" && child.value is JsonStringLiteral
+                    } as? JsonProperty
+                    val pkgValue = (pkgPsi?.value as? JsonStringLiteral)?.value
+
+                    val uriValue = (it.value as? JsonStringLiteral)?.value
+
+                    val pathValue = "Main"  // TODO: find in manifest
+
                     println(TAG + element::class.java.simpleName + "-> " + element.text + "!!! get\n\n\n\n")
-                    val properties = SimpleUtil.findProperties(element.project, "\"${value}", PsiLiteralExpression::class.java)
+                    val properties = SimpleUtil.findProperties(element.project, "\"${uriValue}", PsiLiteralExpression::class.java)
                             .filter {
                                 !it.text.split("?")[0].contains("/")
                             }
 
+                    val declareTargets = SimpleUtil.findDeclareTargets(element.project, pathValue, pkgValue?: "", PsiElement::class.java)
+
                     properties.forEach {
-                        NavTable.addRow(NavTable.Row(invokePsiSet = mutableSetOf(it), bridgePsi = element as JsonProperty))
+                        NavTable.addRow(NavTable.Row(mutableSetOf(it), element as JsonProperty, declareTargets.firstOrNull(), pkgValue))
                     }
 
                     NavTable.print()
 
-                    NavigationGutterIconBuilder.create(TestLineMarkerProvider.ICON)
-                            .setTargets(properties.map{
+                    properties.map{
                                 var cur: PsiElement = it
                                 while(cur !is PsiCallExpression) {
                                     cur = cur.parent
                                 }
                                 cur
-                            })
-                            .setTooltipText("Navigate to a simple property")
-                            .createLineMarkerInfo(element)
+                            }
+                            .plus(declareTargets)
+                            .takeIf { it.isNotEmpty() }
+                            ?.let {
+                                NavigationGutterIconBuilder.create(TestLineMarkerProvider.ICON)
+                                        .setTargets(it)
+                                        .setTooltipText("Navigate to a simple property")
+                                        .createLineMarkerInfo(element)
+                            }
 
                 }?.apply {
                     result?.add(this)
                 }
 
-        // 匹配 "detail/sub" 以及 "detail/sub?from=app.home"
+        // rules: 匹配 "detail/sub" 以及 "detail/sub?from=app.home"
         (element as? JsonProperty)
                 ?.takeIf {
                     val rulesPsi = it.parent.parent
@@ -67,12 +95,22 @@ class TestLineMarkerProvider : RelatedItemLineMarkerProvider() {
                 }
                 ?.let {
                     val bundlePsi = it.parent.parent.parent as? JsonObject
+
+                    val pkgPsi = bundlePsi?.children?.find {
+                        val child = it as? JsonProperty
+                        child?.name == "pkg" && child.value is JsonStringLiteral
+                    } as? JsonProperty
+                    val pkgValue = (pkgPsi?.value as? JsonStringLiteral)?.value
+
                     val uriPsi = bundlePsi?.children?.find {
                         val child = it as? JsonProperty
                         child?.name == "uri" && child.value is JsonStringLiteral
                     } as? JsonProperty
-                    val pathName = it.name
                     val uriValue = (uriPsi?.value as? JsonStringLiteral)?.value
+
+                    val pathName = it.name
+                    val pathValue = (it.value as? JsonStringLiteral)?.value
+
                     println(TAG + element::class.java.simpleName + "-> " + element.text + "!!! get\n\n\n\n")
                     val properties = SimpleUtil.findProperties(element.project, "\"${uriValue}", PsiLiteralExpression::class.java)
                             .filter {
@@ -82,22 +120,29 @@ class TestLineMarkerProvider : RelatedItemLineMarkerProvider() {
                                         .split("?")[0] == "$uriValue/$pathName"     // detail/sub?from=app.home 取?号前部分 == detail + ／ + sub
                             }
 
+                    val declareTargets = SimpleUtil.findDeclareTargets(element.project, "$pathValue", pkgValue?: "", PsiElement::class.java)
+
                     properties.forEach {
-                        NavTable.addRow(NavTable.Row(invokePsiSet = mutableSetOf(it), bridgePsi = element as JsonProperty))
+                        NavTable.addRow(NavTable.Row(mutableSetOf(it), element as JsonProperty, declareTargets.firstOrNull(), pkgValue?: ""))
                     }
 
                     NavTable.print()
 
-                    NavigationGutterIconBuilder.create(TestLineMarkerProvider.ICON)
-                            .setTargets(properties.map{
+                    properties.map{
                                 var cur: PsiElement = it
                                 while(cur !is PsiCallExpression) {
                                     cur = cur.parent
                                 }
                                 cur
-                            })
-                            .setTooltipText("Navigate to a simple property")
-                            .createLineMarkerInfo(element)
+                            }
+                            .plus(declareTargets)
+                            .takeIf { it.isNotEmpty() }
+                            ?.let {
+                                NavigationGutterIconBuilder.create(TestLineMarkerProvider.ICON)
+                                        .setTargets(it)
+                                        .setTooltipText("Navigate to a simple property")
+                                        .createLineMarkerInfo(element)
+                            }
 
                 }?.apply {
                     result?.add(this)

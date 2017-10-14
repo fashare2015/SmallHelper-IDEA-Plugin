@@ -21,20 +21,13 @@ class InvokeLineMarkerProvider : RelatedItemLineMarkerProvider() {
     }
 
     override fun collectNavigationMarkers(element: PsiElement, result: MutableCollection<in RelatedItemLineMarkerInfo<*>>?) {
-
         NavTable.table.filter { MyPsiUtil.contains(it.invokePsiSet, element) }
                 .takeIf { it.isNotEmpty() }
                 ?.let{
                     println(TAG + element::class.java.simpleName + "-> " + element.text + "!!! get\n\n")
 
                     NavigationGutterIconBuilder.create(TestLineMarkerProvider.ICON)
-                            .setTargets(it.map{
-                                var cur = it.bridgePsi
-//                                while(cur !is PsiCallExpression) {
-//                                    cur = cur?.parent
-//                                }
-                                cur
-                            })
+                            .setTargets(it.map{ it.bridgePsi })
                             .setTooltipText("Navigate to a simple property")
                             .createLineMarkerInfo(element)
                 }
