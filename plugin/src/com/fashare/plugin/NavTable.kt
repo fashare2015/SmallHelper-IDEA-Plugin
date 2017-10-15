@@ -1,11 +1,16 @@
 package com.fashare.plugin
 
 import com.intellij.json.psi.JsonProperty
+import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 
 object NavTable{
     const val TAG = "NavTable: "
     val table: MutableSet<Row> = mutableSetOf()
+
+    fun updateByScan(project: Project) {
+        SimpleUtil.updateNavTableByScan(project)
+    }
 
     fun addRow(row: Row) {
         val target = table.find {
@@ -21,28 +26,34 @@ object NavTable{
     }
 
     data class Row(var invokePsiSet: MutableSet<PsiElement> = mutableSetOf(),
-                   var bridgePsi: JsonProperty? = null,
-                   var declarePsi: PsiElement? = null,
+                   var bridgePsi: JsonProperty,
+                   var declarePsiSet: MutableSet<PsiElement> = mutableSetOf(),
                    var pkgName: String?) {
 
         fun fill(other: Row) {
             invokePsiSet.addAll(other.invokePsiSet.filter {
                 !MyPsiUtil.contains(invokePsiSet, it)
             })
-            other.bridgePsi?.apply {
-                bridgePsi = this
-            }
-            other.declarePsi?.apply {
-                declarePsi = this
-            }
-            other.pkgName?.apply {
-                pkgName = this
-            }
+            other.bridgePsi?.apply { bridgePsi = this }
+            declarePsiSet.addAll(other.declarePsiSet.filter {
+                !MyPsiUtil.contains(declarePsiSet, it)
+            })
+            other.pkgName?.apply { pkgName = this }
+        }
+
+        override fun toString(): String {
+            return """
+                Row: {
+                    bridgePsi(uri): ${bridgePsi?.text},
+                    invokePsiSet(Small.openUri()): ${invokePsiSet.map { it.text }},
+                    pkgName(pkg): "$pkgName",
+                    declarePsiSet(rules): ${declarePsiSet.map { it.text }}
+                }"""
         }
     }
 
     fun print(){
         table.forEach { println(TAG + it) }
-        print("\n\n\n\n")
+        print("\n\n")
     }
 }

@@ -1,17 +1,27 @@
 <idea-plugin>
-  <id>com.your.company.unique.plugin.id</id>
-  <name>Plugin display name here</name>
-  <version>1.0</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+  <id>com.fashare.smallhelper</id>
+  <name>SmallHelper</name>
+  <version>1.0.0</version>
+  <vendor email="153614131@qq.com" url="https://github.com/fashare2015/SmallHelper-IDEA-Plugin">fashare</vendor>
 
   <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+      <html>
+        为<a href="https://github.com/wequick/Small">Small框架</a>建立页面索引和跳转
+        <ul>
+          <li>调用处<->路由表 ———— Small.openUri("detail" ...);[xxx.java] <-> "uri": "detail"[bundle.json] </li>
+          <li>调用处<->声明处 ———— Small.openUri("detail" ...);[xxx.java] <-> public class MainActivity extends Activity{...}[pkg/xxxActivity.java] </li>
+          <li>路由表<->声明处 ———— "uri": "detail"[bundle.json]           <-> public class MainActivity extends Activity{...}[pkg/xxxActivity.java] </li>
+        </ul>
+      </html>
     ]]></description>
 
   <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+      <html>
+        <b>1.0</b> (12/30/2013)
+        <ul>
+          <li>初始版本，提供三方相互索引: [调用处(xxx.java), 声明处(xxxActivity.java), 路由表(bundle.json)]</li>
+        </ul>
+      </html>
     ]]>
   </change-notes>
 
@@ -26,7 +36,7 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
-    <codeInsight.lineMarkerProvider language="JSON" implementationClass="com.fashare.plugin.TestLineMarkerProvider"/>
+    <codeInsight.lineMarkerProvider language="JSON" implementationClass="com.fashare.plugin.BundleJsonLineMarkerProvider"/>
     <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.fashare.plugin.InvokeLineMarkerProvider"/>
     <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.fashare.plugin.DeclareLineMarkerProvider"/>
   </extensions>
