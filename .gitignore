@@ -1,7 +1,8 @@
+.DS_Store
 .idea/
-.DS_Store/
 .gradle/
 out/
 build/
 .sandbox/
 *.iml
+
