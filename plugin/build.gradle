@@ -16,18 +16,24 @@ compileKotlin {
 }
 
 intellij {
+//    downloadSources false
+//    updateSinceUntilBuild false
     version = 'IC-145.2070.6' //调试我们插件的版本
     sandboxDirectory = project.rootDir.canonicalPath + "/.sandbox" //插件生成的临时文件的地址
+
+    pluginName 'SmallHelper'
+
+//    publishPlugin {
+//        username 'ollide'
+//        password JETBRAINS_PASSWORD
+//    }
 }
 
-sourceSets {
-    main.java.srcDirs 'src'
-    main.resources.srcDir 'resources'
-}
+//sourceSets {
+//    main.java.srcDirs = ['src/main/test']
+//    main.resources.srcDirs = ['resources']
+//}
 
-repositories {
-    jcenter()
-}
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
