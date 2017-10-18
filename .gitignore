@@ -6,3 +6,5 @@ build/
 .sandbox/
 *.iml
 
+local.properties
+gradle.properties

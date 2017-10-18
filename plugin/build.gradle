@@ -5,18 +5,26 @@ plugins {
 apply plugin: 'org.jetbrains.intellij'
 
 group 'com.fashare'
-version '1.0'
+version '1.0-SNAPSHOT'
 
 intellij {
-//    downloadSources false
-    updateSinceUntilBuild false     // 重要！！！ 用来兼容其他平台，原因未知。。。(可能与plugin.xml中的since-build有关)
-    version = 'IC-145.2070.6' // 开发插件所依赖的 IDEA sdk 版本
-    sandboxDirectory = project.rootDir.canonicalPath + "/.sandbox" //插件生成的临时文件的地址
-
     pluginName 'SmallHelper'
 
-//    publishPlugin {
-//        username 'ollide'
-//        password JETBRAINS_PASSWORD
-//    }
+    // 开发插件所依赖的 IDEA sdk 版本
+    def useLocalIdeaSdk = true      // 默认使用本地 IDEA-SDK
+    if(useLocalIdeaSdk) {
+//        localPath '/Applications/IntelliJ IDEA CE.app/Contents'
+        localPath '/Applications/Android Studio.app/Contents'   // mac 下 idea 的路径
+    }else {
+        version = 'IC-145.2070.6'   // 从远程下载特定版本的 IDEA-SDK (200+MB), 比较慢...
+    }
+
+    updateSinceUntilBuild false     // 重要！！！ 用来兼容其他平台，(与plugin.xml中的since-build有关)
+    sandboxDirectory = project.rootDir.canonicalPath + "/.sandbox" //插件生成的临时文件的地址
+
+
+    publishPlugin {
+        username 'fashare2015'
+        password rootProject.JETBRAINS_PASSWORD
+    }
 }
