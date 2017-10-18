@@ -6,20 +6,24 @@
 
   <description><![CDATA[
       <html>
-        为<a href="https://github.com/wequick/Small">Small框架</a>建立页面索引和跳转
-        <ul>
-          <li>调用处<->路由表 ———— Small.openUri("detail" ...);[xxx.java] <-> "uri": "detail"[bundle.json] </li>
-          <li>调用处<->声明处 ———— Small.openUri("detail" ...);[xxx.java] <-> public class MainActivity extends Activity{...}[pkg/xxxActivity.java] </li>
-          <li>路由表<->声明处 ———— "uri": "detail"[bundle.json]           <-> public class MainActivity extends Activity{...}[pkg/xxxActivity.java] </li>
-        </ul>
+          为<a href="https://github.com/wequick/Small"> 插件化框架 “Small” </a>建立页面索引和快速跳转
+          <br/><br/>
+          <table border="1" cellpadding="10" cellspacing="0">
+              <tr>
+                  <td>路由表 [bundle.json]   </td>  <td>调用处 [xxx.java]            </td>   <td>声明处 [pkg/xxxActivity.java] </td>
+              </tr>
+              <tr>
+                  <td>"uri": "detail"       </td>  <td>Small.openUri("detail");   </td>   <td>[detail模块] MainActivity.java</td>
+              </tr>
+          </table>
       </html>
     ]]></description>
 
   <change-notes><![CDATA[
       <html>
-        <b>1.0</b> (12/30/2013)
+        <b>1.0</b> (2017/10/18)
         <ul>
-          <li>初始版本，提供三方相互索引: [调用处(xxx.java), 声明处(xxxActivity.java), 路由表(bundle.json)]</li>
+          <li>初始版本，提供三方相互索引: [调用处, 声明处, 路由表]</li>
         </ul>
       </html>
     ]]>

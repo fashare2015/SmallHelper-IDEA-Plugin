@@ -7,4 +7,3 @@ build/
 *.iml
 
 local.properties
-gradle.properties
