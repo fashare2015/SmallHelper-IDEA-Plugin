@@ -15,9 +15,11 @@ see [Small/wiki/UI-route]
 ![screen-record/small.gif]
 
 ## 安装使用：install
-- Preference -> Plugins
-  - Browse repos `SmallHelper`: 插件需要2～3天审核，暂时应该还搜不到
-  - Install Plugin From Disk: 下载 [SmallHelper-1.0-SNAPSHOT.zip]，本地安装
+1. Preference -> Plugins
+   - Browse repos `SmallHelper`: 插件需要2～3天审核，暂时应该还搜不到
+   - Install Plugin From Disk: 下载 [SmallHelper-1.0-SNAPSHOT.zip]，本地安装
+
+2. clone [Small] demo -> 打开 Android 工程 `Small/Android/Sample` 进行体验
 
 ## 源码调试: clone && run
 如果您对源码感兴趣的话：
