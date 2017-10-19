@@ -225,5 +225,5 @@ intellij {
 个人而言，应付日常需求如果已经游刃有余了。不妨跳出舒适区，挑战一个完全陌生的领域，
 对查阅英文文档、工程能力是很大的提升。尤其是最后完成的那一刻，瞬间宛如高潮般的体验。
 
-[small-can-not-navigate.png]: ../screen-record/small-can-not-navigate.png
-[screen-record/small.gif]: ../screen-record/small.gif
+[small-can-not-navigate.png]: https://github.com/fashare2015/SmallHelper-IDEA-Plugin/raw/master/screen-record/small-can-not-navigate.png
+[screen-record/small.gif]: https://github.com/fashare2015/SmallHelper-IDEA-Plugin/raw/master/screen-record/small.gif
