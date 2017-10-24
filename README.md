@@ -17,7 +17,7 @@ see [Small/wiki/UI-route]
 ## 安装使用：install
 1. Preference -> Plugins
    - Browse repos `SmallHelper`: 插件需要2～3天审核，暂时应该还搜不到
-   - Install Plugin From Disk: 下载 [SmallHelper-1.0-SNAPSHOT.zip]，本地安装
+   - Install Plugin From Disk: 下载 [SmallHelper-1.0.1.zip]，本地安装
 
 2. clone [Small] demo -> 打开 Android 工程 `Small/Android/Sample` 进行体验
 
@@ -40,4 +40,4 @@ see [Small/wiki/UI-route]
 [Small]: https://github.com/wequick/Small
 [Small/wiki/UI-route]: https://github.com/wequick/Small/wiki/UI-route
 [screen-record/small.gif]: screen-record/small.gif
-[SmallHelper-1.0-SNAPSHOT.zip]: release-output/SmallHelper-1.0-SNAPSHOT.zip
+[SmallHelper-1.0.1.zip]: release-output/SmallHelper-1.0.1.zip
