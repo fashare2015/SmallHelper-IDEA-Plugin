@@ -1,7 +1,6 @@
 package com.fashare.plugin
 
 import com.intellij.ide.highlighter.JavaFileType
-import com.intellij.json.JsonFileType
 import com.intellij.json.psi.JsonFile
 import com.intellij.json.psi.JsonObject
 import com.intellij.json.psi.JsonProperty
@@ -95,12 +94,11 @@ object SimpleUtil {
     }
 
     fun updateNavTableByScan(project: Project) {
-        val virtualFiles = FileBasedIndex.getInstance().getContainingFiles<FileType, Void>(FileTypeIndex.NAME, JsonFileType.INSTANCE, GlobalSearchScope.projectScope(project))
+        // getContainingFiles() 不知为啥在 AS 2.3.3 上无效
+//        val virtualFiles = FileBasedIndex.getInstance().getContainingFiles<FileType, Void>(FileTypeIndex.NAME, JsonFileType.INSTANCE, GlobalSearchScope.projectScope(project))
+        val virtualFiles = FilenameIndex.getVirtualFilesByName(project, "bundle.json", GlobalSearchScope.projectScope(project))
         for (virtualFile in virtualFiles) {
-            val jsonFile = PsiManager.getInstance(project).findFile(virtualFile) as JsonFile?
-
-            if (jsonFile?.name != "bundle.json")
-                continue
+            val jsonFile = PsiManager.getInstance(project).findFile(virtualFile) as? JsonFile? ?: continue
 
             println(TAG + "=======> " + jsonFile.name)
 

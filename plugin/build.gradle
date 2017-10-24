@@ -5,7 +5,7 @@ plugins {
 apply plugin: 'org.jetbrains.intellij'
 
 group 'com.fashare'
-version '1.0-SNAPSHOT'
+version '1.0.1'
 
 intellij {
     pluginName 'SmallHelper'
