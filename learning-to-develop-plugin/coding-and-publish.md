@@ -16,6 +16,7 @@
 |路由表 `bundle.json` | 调用处 `xxx.java` | 声明处 `pkg/xxxActivity.java` |
 |:----:|:----:|:----:|
 |"uri": "detail" | Small.openUri("detail"); | (detail模块) MainActivity.java |
+
 其他路由框架也逃不开 `路由表`，`调用处`，`声明处` 这三者。
 
 > PS: 关于 Small 详细的路由规则，请参看 [Small/wiki/UI-route]
@@ -46,7 +47,7 @@ public class PsiTreeUtil {
     public static <T extends PsiElement> Collection<T> findChildrenOfType(PsiElement root, Class<? extends T> targetClass){...}
 }
 ```
-如 `PsiTreeUtil.findChildrenOfType(psiJavaFile, PsiLiteralExpression.class)` 返回一个列表，包含这个 .java 文件中所有的字面量。然后，筛选出为 "detail" 的那些。
+如 `PsiTreeUtil.findChildrenOfType(psiJavaFile, PsiLiteralExpression.class)` 返回一个列表，包含这个 .java 文件中所有的字面量。然后，我们可以从中筛选出 “符合我们自定义urlscheme” 的那些。
 
 在此之前，我们需要拿到 `psiJavaFile`，`FileBasedIndex` 中有相关方法可以遍历整个 `Project` 的文件。更多细节可以查阅 [PsiFile]
 
